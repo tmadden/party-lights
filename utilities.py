@@ -55,6 +55,7 @@ def color(c):
     return rgb(round(c.red * 255), round(c.green * 255), round(c.blue * 255))
 
 def dim(c, intensity):
+    # return {**{key: value * intensity for (key, value) in c.items()}, 'brightness': intensity}
     return {**c, 'brightness': intensity}
 
 on = {'c': 255, 'w': 255}
@@ -63,11 +64,11 @@ off = None
 cold_white = {'c': 255}
 warm_white = {'w': 255}
 
-light_gorgeous = rgb(128, 0, 255)
-gorgeous = rgb(160, 0, 255)
-snowy = rgb(32, 32, 255)
-blue_snowy = rgb(8, 8, 255)
-pretty = rgb(255, 0, 64)
+light_gorgeous = raw_rgb(128, 0, 255)
+gorgeous = raw_rgb(160, 0, 255)
+snowy = raw_rgb(32, 32, 255)
+blue_snowy = raw_rgb(8, 8, 255)
+pretty = raw_rgb(255, 0, 64)
 good_purple = raw_rgb(123, 0, 255)
 
-palette = [light_gorgeous, gorgeous, snowy, pretty, good_purple]
+palette = [light_gorgeous, gorgeous, snowy, good_purple]

@@ -9,12 +9,14 @@ from light import Light
 # from patterns.connect_four import connect_four
 # from patterns.ramp_up import ramp_up
 from patterns.progression import progression
+from patterns.randomLizard import randomLizard
+from patterns.ambientLight import ambientLight
 # from patterns.snake import snake
 # from patterns.pulsate import pulsate
 # from patterns.ferris import ferris
 # from patterns.tictac import tictactoe
 
-test_pattern = progression
+test_pattern = ambientLight
 
 
 async def control_loop(lights):
