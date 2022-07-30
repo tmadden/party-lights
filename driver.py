@@ -8,16 +8,14 @@ import utilities
 from light import Light
 
 # from patterns.connect_four import connect_four
-# from patterns.ramp_up import ramp_up
 from patterns.progression import progression
 from patterns.random_lizard import random_lizard
 from patterns.ambient_light import ambient_light
-# from patterns.snake import snake
+from patterns.ukraine import ukraine
+from patterns.slider import slider
 # from patterns.pulsate import pulsate
-# from patterns.ferris import ferris
-# from patterns.tictac import tictactoe
 
-test_pattern = None
+test_pattern = ukraine
 
 all_patterns = [progression, ambient_light]
 
@@ -27,13 +25,12 @@ current_pattern_index = 0
 async def control_loop(lights):
     global current_pattern_index
 
-    if test_pattern:
-        await test_pattern(lights)
-        reset_all(lights)
-        await asyncio.sleep(1)
-    else:
-        while True:
-            utilities.interrupt_pattern_loop = False
+    while True:
+        utilities.interrupt_pattern_loop = False
+        utilities.mouse_clicks.clear()
+        if test_pattern:
+            await test_pattern(lights)
+        else:
             await all_patterns[current_pattern_index](lights)
 
 
@@ -51,13 +48,19 @@ async def main():
 
 from pynput import mouse
 
+mouse_controller = mouse.Controller()
+
 
 def on_move(x, y):
-    print('Pointer moved to {0}'.format((x, y)))
+    utilities.mouse_position[0] += x
+    utilities.mouse_position[1] += y
+    if [x, y] != [0, 0]:
+        mouse_controller.position = (0, 0)
 
 
 def on_click(x, y, button, pressed):
-    print(button)
+    if pressed:
+        utilities.mouse_clicks.append(button)
 
 
 def on_scroll(x, y, dx, dy):

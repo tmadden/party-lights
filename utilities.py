@@ -4,6 +4,21 @@ import time
 
 from pywizlight.rgbcw import rgb2rgbcw
 
+mouse_position = [0, 0]
+
+
+def mouse():
+    return mouse_position
+
+
+mouse_clicks = []
+
+
+def clicks():
+    new_clicks = mouse_clicks.copy()
+    mouse_clicks.clear()
+    return new_clicks
+
 
 def index(p):
     return p[0] * 4 + p[1]
