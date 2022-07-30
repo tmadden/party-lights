@@ -20,9 +20,8 @@ from operator import add
 async def progression(lights):
     loop = PeriodicLoop(0.1, 4)
     index = 0
-    print(gorgeous)
-    # while not loop.done():
-    #     lights[(index - 4) % 24].set_state(off)
-    #     lights[index % 24].set_state(dim(gorgeous, 0.1))
-    #     index += 1
-    #     await loop.next()
+    while not loop.done():
+        lights[(index - 4) % 24].set_state(off)
+        lights[index % 24].set_state(dim(gorgeous, 0.1))
+        index += 1
+        await loop.next()
