@@ -8,16 +8,18 @@ import utilities
 from light import Light
 
 # from patterns.connect_four import connect_four
-from patterns.progression import progression
+from patterns.progression import progression, no_progression
 from patterns.random_lizard import random_lizard
 from patterns.ambient_light import ambient_light
 from patterns.ukraine import ukraine
 from patterns.slider import slider
-# from patterns.pulsate import pulsate
+from patterns.color_slider import color_slider
+from patterns.sparkle import sparkle
+from patterns.shots import shots
 
-test_pattern = ukraine
+test_pattern = None
 
-all_patterns = [progression, ambient_light]
+all_patterns = [progression, slider, shots, color_slider, sparkle, ukraine]
 
 current_pattern_index = 0
 
@@ -60,18 +62,17 @@ def on_move(x, y):
 
 def on_click(x, y, button, pressed):
     if pressed:
-        utilities.mouse_clicks.append(button)
+        if button == mouse.Button.left:
+            utilities.mouse_clicks.append(button)
+        elif button == mouse.Button.right:
+            global current_pattern_index
+            current_pattern_index = (current_pattern_index + 1) % len(all_patterns)
+            utilities.interrupt_pattern_loop = True
 
-
-def on_scroll(x, y, dx, dy):
-    global current_pattern_index
-    current_pattern_index = (current_pattern_index + dy) % len(all_patterns)
-    utilities.interrupt_pattern_loop = True
 
 
 mouse_listener = mouse.Listener(on_move=on_move,
                                 on_click=on_click,
-                                on_scroll=on_scroll,
                                 suppress=True)
 mouse_listener.start()
 

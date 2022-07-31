@@ -10,26 +10,25 @@ from operator import add
 
 async def ambient_light(lights):
 
-    loop = PeriodicLoop(0.01)
-    u = 0
+    colors = []
+
+    def set_colors():
+        nonlocal colors
+        colors = []
+        for i in range(24):
+            rr = random.randint(0, 255)
+            gr = random.randint(0, 255)
+            br = random.randint(0, 255)
+            colors.append(raw_rgb(rr, gr, br))
+
+    set_colors()
+
+    loop = PeriodicLoop(1)
     while not loop.done():
         for i in range(24):
-            if u % 2 == 0:
-                if i < 12:
-                    rr = 0
-                    gr = 0
-                    br = 255
-                else:
-                    rr = 255
-                    gr = 255
-                    br = 0
-            else:
-                rr = random.randint(0, 255)
-                gr = random.randint(0, 255)
-                br = random.randint(0, 255)
-
-            lights[i].set_state(raw_rgb(rr, gr, br))
+            lights[i].set_state(colors[i])
 
         for click in clicks():
-            u += 1
+            set_colors()
+
         await loop.next()

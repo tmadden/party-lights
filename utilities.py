@@ -97,11 +97,23 @@ off = None
 cold_white = {'c': 255}
 warm_white = {'w': 255}
 
-light_gorgeous = raw_rgb(128, 0, 255)
+light_gorgeous = raw_rgb(64, 0, 255)
 gorgeous = raw_rgb(160, 0, 255)
 snowy = raw_rgb(32, 32, 255)
 blue_snowy = raw_rgb(8, 8, 255)
-pretty = raw_rgb(255, 0, 64)
 good_purple = raw_rgb(123, 0, 255)
+pretty = raw_rgb(255, 0, 64)
 
-palette = [light_gorgeous, gorgeous, snowy, good_purple]
+snow_palette = [blue_snowy, light_gorgeous, snowy, good_purple]
+
+snow_diverse_palette = [blue_snowy, pretty, gorgeous, light_gorgeous, good_purple]
+
+red_palette = [raw_rgb(255, 0, 32), raw_rgb(200, 0, 128), raw_rgb(255, 0, 0)]
+
+red_diverse_palette = [raw_rgb(255, 128, 0), pretty, raw_rgb(200, 0, 128), raw_rgb(255, 0, 32), raw_rgb(255, 0, 0)]
+
+yellow_palette = [raw_rgb(255, 128, 0), raw_rgb(255, 255, 0), raw_rgb(255, 192, 0), raw_rgb(192, 64, 0)]
+
+yellow_diverse_palette = [raw_rgb(255, 32, 0), raw_rgb(255, 128, 0), raw_rgb(255, 255, 0), raw_rgb(255, 192, 0), raw_rgb(192, 64, 0)]
+
+green_diverse_palette = [raw_rgb(0, 255, 0), raw_rgb(255, 255, 0), raw_rgb(128, 255, 0), raw_rgb(0, 255, 192), raw_rgb(64, 255, 64)]

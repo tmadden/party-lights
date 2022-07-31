@@ -7,47 +7,55 @@ from utilities import *
 
 from operator import add
 
-# async def progression(lights):
-#     loop = PeriodicLoop(0.1, 10)
-#     index = 0
-#     while not loop.done():
-#         lights[(index - 4) % 24].set_state(off)
-#         lights[index % 24].set_state(on)
-#         index += 1
-#         await loop.next()
-
-
 async def progression(lights):
-    loop = PeriodicLoop(0.1, 40)
-    for light in lights:
-        light.set_state(dim(random.choice(palette), 0.1))
-    index = 0
+    loop = PeriodicLoop(0.01)
+
+    palettes = [snow_palette, red_palette]
+    palette_index = 0
+
+    background = [random.choice(snow_palette) for _ in range(24)]
+    wave_color = red_palette[0]
+
+    index = -1
+    direction = 0.1
     while not loop.done():
-        old_index = (index - 4) % 24
-        lights[old_index].set_state(dim(random.choice(palette), 0.1))
-        lights[index % 24].set_state(dim(pretty, 0.1))
-        index += 1
+        for i in range(24):
+            if 0 <= (i - int(index)) <= 3:
+                lights[i].set_state(wave_color)
+            else:
+                lights[i].set_state(background[i])
+
+        index += direction
+        if index < -1:
+            index = -1
+            direction = 0.1
+        if index >= 21:
+            index = 21
+            direction = -0.1
+
+        for click in clicks():
+            wave_color = palettes[palette_index][0]
+            palette_index = (palette_index + 1) % len(palettes)
+            background = [random.choice(palettes[palette_index]) for _ in range(24)]
+
         await loop.next()
 
 
-# async def progression(lights):
-#     shots = []
+async def no_progression(lights):
+    loop = PeriodicLoop(0.01)
+    palettes = [snow_palette, red_palette]
+    palette_index = 0
 
-#     background = [random.choice(palette) for _ in range(24)]
-#     for index, light in enumerate(lights):
-#         light.set_state(background[index])
+    background = [random.choice(snow_palette) for _ in range(24)]
+    wave_color = red_palette[0]
 
-#     loop = PeriodicLoop(0.1, 40)
-#     while not loop.done():
-#         if random.random() < 0.1:
-#             shots.append(random.choice([[0, 1, pretty], [23, -1, raw_rgb(150, 100, 0)]]))
-#         print('---')
-#         print(shots)
-#         for shot in shots:
-#             lights[(shot[0] - shot[1]) % 24].set_state(background[shot[0]])
-#             shot[0] += shot[1]
-#         shots = list(filter(lambda shot: 0 <= shot[0] <= 23, shots))
-#         print(shots)
-#         for shot in shots:
-#             lights[(shot[0] + shot[1]) % 24].set_state(shot[2])
-#         await loop.next()
+    while not loop.done():
+        for i in range(24):
+            lights[i].set_state(background[i])
+
+        for click in clicks():
+            wave_color = palettes[palette_index][0]
+            palette_index = (palette_index + 1) % len(palettes)
+            background = [random.choice(palettes[palette_index]) for _ in range(24)]
+
+        await loop.next()

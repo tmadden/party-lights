@@ -20,7 +20,7 @@ async def ukraine(lights):
                 br = 255
             else:
                 rr = 255
-                gr = 255
+                gr = 213
                 br = 0
 
             lights[i].set_state(raw_rgb(rr, gr, br))
